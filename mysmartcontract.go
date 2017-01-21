@@ -12,7 +12,7 @@ import (
 type SimpleChaincode struct {
 }
 
-var userIndexStr = "_userindex"
+var userIndexStr = "myindex"
 
 func main() {
 	fmt.Println("ELITE HACKERS... Era begins...");
@@ -63,7 +63,7 @@ func (t *SimpleChaincode) addKYC(stub shim.ChaincodeStubInterface, args []string
 
 	str = `{"id": "` + args[0] + `", "name": "` + args[1] + `", "bname": "` + args[2] + `", "kycdate": "` + args[3] + `", "validTill": "` + args[4] + `", "document": "` + args[5] + `"}`
 
-	err = stub.PutState(args[0], []byte(str))
+	err = stub.PutState(userIndexStr, []byte(str))
 
 	if err != nil {
 		return nil, err
@@ -92,7 +92,7 @@ func (t *SimpleChaincode) getKYC(stub shim.ChaincodeStubInterface, args []string
 	var jsonResp string
 
 	accountId = args[0]
-	valAsbytes, err := stub.GetState(accountId) //get the var from chaincode state
+	valAsbytes, err := stub.GetState(userIndexStr) //get the var from chaincode state
 	if err != nil {
 		jsonResp = "{\"Error\":\"Failed to get state for " + accountId + "\"}"
 		return []byte(jsonResp), nil
