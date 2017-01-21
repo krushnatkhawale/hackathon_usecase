@@ -2,7 +2,6 @@
   This is smart contract to be deployed in BlockChain
 */
 
-
 package main
 
 import (
@@ -51,6 +50,11 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 
 func (t *SimpleChaincode) addKYC(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 
+
+	var err error
+	var str string
+
+
     fmt.Println("running addKYC@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@()")
     fmt.Println("running addKYC@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@()")
     fmt.Println("running addKYC@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@()")
@@ -64,5 +68,13 @@ func (t *SimpleChaincode) addKYC(stub shim.ChaincodeStubInterface, args []string
     fmt.Println( args[4] )
 
 
-    return nil, nil
+	str = `{"id": "` + args[0] + `", "name": "` + args[1] + `", "bname": "` + args[2] + `", "kycdate": "` + args[3] + `", "validTill": "` + args[4] + `", "document": "` + args[5] + `"}`
+
+	err = stub.PutState(args[0], []byte(str))
+
+	if err != nil {
+		return nil, err
+	}
+
+	return []byte("Congratulations!, We guarantee your records"), nil
 }
