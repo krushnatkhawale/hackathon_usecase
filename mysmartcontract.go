@@ -1,0 +1,3 @@
+/*
+  This is smart contract to be deployed in BlockChain
+*/
